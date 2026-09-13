@@ -18,7 +18,7 @@ export const profile = {
 	linkedin: 'https://www.linkedin.com/in/razz-ernesto',
 	bio: 'I turn complex ideas into intuitive web experiences. With over six years in software development, I bring thoughtful interfaces, practical architecture, and a curious mind to every build.',
 	yearsExperience: '6+',
-	portraitUrl: 'https://razz-dev.com/images/about-me--photo.png'
+	portraitUrl: '/images/razz-black.jpg'
 };
 
 export const contactChannels = [

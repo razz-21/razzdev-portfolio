@@ -18,8 +18,8 @@
 					<img
 						src={profile.portraitUrl}
 						alt="Ernesto Razo Jr"
-						width="480"
-						height="570"
+						width="1200"
+						height="1600"
 						loading="lazy"
 						onerror={() => (photoFailed = true)}
 					/>
@@ -139,7 +139,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: center 25%;
+		object-position: center 62%;
 		filter: grayscale(1);
 	}
 	.portrait-shade {
@@ -395,7 +395,7 @@
 			width: 100%;
 		}
 		.portrait-card img {
-			object-position: center 20%;
+			object-position: center 58%;
 		}
 		.about-copy h2 {
 			font-size: clamp(42px, 7.8vw, 57px);

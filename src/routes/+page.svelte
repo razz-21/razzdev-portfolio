@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import Navbar from '$lib/components/layout/Navbar.svelte';
 	import Hero from '$lib/components/sections/Hero.svelte';
 	import SelectedWork from '$lib/components/sections/SelectedWork.svelte';
@@ -19,7 +20,7 @@
 	<meta property="og:title" content="Razz — Thoughtful code. Meaningful experiences." />
 	<meta property="og:description" content={profile.bio} />
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content={profile.portraitUrl} />
+	<meta property="og:image" content={`${page.url.origin}${profile.portraitUrl}`} />
 	<meta name="twitter:card" content="summary" />
 </svelte:head>
 
