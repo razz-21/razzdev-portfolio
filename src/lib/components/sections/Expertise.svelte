@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { ArrowUpRight, CodeXml, Smartphone, Sparkles } from '@lucide/svelte';
+	import GrainFieldBackground from '$lib/components/visuals/GrainFieldBackground.svelte';
 	import { capabilities, profile } from '$lib/data/portfolio';
 
 	const icons = [CodeXml, Smartphone, Sparkles];
 </script>
 
 <section id="expertise" class="expertise-section" aria-labelledby="expertise-heading">
-	<div class="page-shell">
+	<GrainFieldBackground />
+	<div class="page-shell expertise-content">
 		<div class="section-intro">
 			<h2 id="expertise-heading" class="section-heading">
 				From the first idea.<br /><span>To the final detail.</span>
@@ -48,11 +50,16 @@
 <style>
 	.expertise-section {
 		position: relative;
+		isolation: isolate;
 		padding: 100px 0;
 		overflow: clip;
-		background: #fff;
+		background: #dceaf4;
 		color: #19171f;
 		color-scheme: light;
+	}
+	.expertise-content {
+		position: relative;
+		z-index: 1;
 	}
 	.section-intro {
 		display: flex;
@@ -88,7 +95,7 @@
 		flex-direction: column;
 		border-radius: 17px;
 		padding: 29px;
-		background-color: #f7f6f980;
+		background-color: #ffffff78;
 		min-width: 0;
 		box-shadow:
 			0 12px 32px #21132e06,
@@ -98,12 +105,12 @@
 			transform 0.25s;
 	}
 	.capability-card:hover {
-		background-color: #f0edf5;
+		background-color: #fffffff0;
 		transform: translateY(-4px);
 	}
 	.capability-card::before,
 	.capability-icon::before {
-		background: linear-gradient(180deg, #46345326, #4634530d 35%, #46345308 65%, #46345321);
+		background: linear-gradient(180deg, #3d4d6326, #3d4d630d 35%, #3d4d6308 65%, #3d4d6321);
 	}
 	.capability-card .text-link:focus-visible {
 		outline: 2px solid #6f5389;
@@ -122,7 +129,7 @@
 		place-items: center;
 		border-radius: 15px;
 		color: #514461;
-		background: linear-gradient(145deg, #fff, #e9e4f0);
+		background: linear-gradient(145deg, #fff, #e4eaf0);
 		transform: rotate(-6deg);
 	}
 	.capability-icon :global(svg) {
