@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	import { ArrowUpRight, CodeXml, Smartphone, Sparkles } from '@lucide/svelte';
 	import GrainFieldBackground from '$lib/components/visuals/GrainFieldBackground.svelte';
 	import { capabilities, profile } from '$lib/data/portfolio';
@@ -10,10 +11,10 @@
 	<GrainFieldBackground />
 	<div class="page-shell expertise-content">
 		<div class="section-intro">
-			<h2 id="expertise-heading" class="section-heading">
+			<h2 id="expertise-heading" class="section-heading" {@attach reveal()}>
 				From the first idea.<br /><span>To the final detail.</span>
 			</h2>
-			<p>
+			<p {@attach reveal({ delay: 100 })}>
 				A thoughtful interface is only the beginning. I bring the engineering behind it together, so
 				your idea works as well as it feels.
 			</p>
@@ -21,7 +22,10 @@
 		<div class="capabilities-grid">
 			{#each capabilities as capability, index (capability.title)}
 				{@const Icon = icons[index]}
-				<article class="capability-card liquid-glass-strong">
+				<article
+					class="capability-card liquid-glass-strong"
+					{@attach reveal({ delay: index * 120, distance: 32 })}
+				>
 					<div class="card-top">
 						<div class="capability-icon liquid-glass-strong">
 							<Icon size={25} strokeWidth={1.2} />
@@ -39,7 +43,7 @@
 				</article>
 			{/each}
 		</div>
-		<div class="craft-note">
+		<div class="craft-note" {@attach reveal({ distance: 20 })}>
 			<span class="quote-mark" aria-hidden="true">“</span>
 			<p>Good software should feel simple.<br /><span>Even when what’s behind it isn’t.</span></p>
 			<span class="quote-line" aria-hidden="true"></span>
@@ -104,7 +108,7 @@
 			background-color 0.25s,
 			transform 0.25s;
 	}
-	.capability-card:hover {
+	.capability-card:is(:hover, :focus-within) {
 		background-color: #fffffff0;
 		transform: translateY(-4px);
 	}
@@ -123,6 +127,9 @@
 		margin-bottom: 35px;
 	}
 	.capability-icon {
+		transition:
+			transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+			box-shadow 0.45s;
 		width: 53px;
 		height: 53px;
 		display: grid;
@@ -134,6 +141,14 @@
 	}
 	.capability-icon :global(svg) {
 		transform: rotate(6deg);
+		transition: transform 0.45s;
+	}
+	.capability-card:is(:hover, :focus-within) .capability-icon {
+		transform: rotate(0) translateY(-3px);
+		box-shadow: 0 8px 18px #51446118;
+	}
+	.capability-card:is(:hover, :focus-within) .capability-icon :global(svg) {
+		transform: rotate(0);
 	}
 	.card-number {
 		color: #78717f;

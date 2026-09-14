@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	import { tick } from 'svelte';
 	import { X } from '@lucide/svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -37,20 +38,22 @@
 
 	<div class="page-shell cta-content">
 		<div class="cta-copy">
-			<p class="eyebrow">HAVE SOMETHING IN MIND?</p>
-			<h2 id="cta-heading">Your next app<br />starts here.</h2>
-			<p class="cta-description">
+			<p class="eyebrow" {@attach reveal({ distance: 16 })}>HAVE SOMETHING IN MIND?</p>
+			<h2 id="cta-heading" {@attach reveal({ delay: 100, distance: 36 })}>
+				Your next app<br />starts here.
+			</h2>
+			<p class="cta-description" {@attach reveal({ delay: 180 })}>
 				Good things start with a conversation. Tell me what you’re imagining,<br
 					class="desktop-break"
 				/>
 				and let’s work out how to bring it to life. No pressure. Just possibilities.
 			</p>
-			<div class="cta-actions">
+			<div class="cta-actions" {@attach reveal({ delay: 260, distance: 20 })}>
 				<Button href={emailHref} variant="glass">Email Me</Button>
 			</div>
 		</div>
 
-		<footer>
+		<footer {@attach reveal({ distance: 16 })}>
 			<div class="footer-identity">
 				<a class="wordmark" href="#home" aria-label="Razz, back to top">razz<span>.</span></a>
 				<p>© 2026 {profile.name}. All rights reserved.</p>
@@ -257,6 +260,30 @@
 	dialog::backdrop {
 		background: #000b;
 		backdrop-filter: blur(9px);
+	}
+	dialog[open] {
+		animation: dialog-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	dialog[open]::backdrop {
+		animation: backdrop-enter 0.3s ease-out;
+	}
+	@keyframes dialog-enter {
+		from {
+			opacity: 0;
+			transform: translateY(16px) scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	@keyframes backdrop-enter {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 	.dialog-content {
 		position: relative;

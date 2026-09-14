@@ -73,6 +73,7 @@
 		background: linear-gradient(#050505ed, #050505ad 65%, transparent);
 	}
 	.header-inner {
+		animation: header-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 		height: 100px;
 		display: flex;
 		align-items: center;
@@ -86,7 +87,15 @@
 		line-height: 1;
 	}
 	.wordmark span {
+		display: inline-block;
 		color: #aaa69e;
+		transition:
+			color 0.3s,
+			transform 0.3s;
+	}
+	.wordmark:is(:hover, :focus-visible) span {
+		color: #e0c6ff;
+		transform: translateY(-3px);
 	}
 	.desktop-nav {
 		position: absolute;
@@ -99,6 +108,7 @@
 		background-color: #19191960;
 	}
 	.desktop-nav a {
+		position: relative;
 		color: #a6a6a3;
 		border-radius: 30px;
 		padding: 10px 22px;
@@ -110,12 +120,27 @@
 	.desktop-nav a:hover {
 		color: #fff;
 	}
+	.desktop-nav a::after {
+		content: '';
+		position: absolute;
+		bottom: 5px;
+		left: calc(50% - 7px);
+		width: 14px;
+		height: 1px;
+		background: #dac9eb;
+		transform: scaleX(0);
+		transition: transform 0.3s;
+	}
+	.desktop-nav a:is(:hover, :focus-visible)::after {
+		transform: scaleX(1);
+	}
 	.desktop-nav a.active {
 		background: #ffffff10;
 		color: #fff;
 		box-shadow: inset 0 1px 0 #ffffff0c;
 	}
 	.header-contact {
+		transition: border-color 0.3s;
 		display: inline-flex;
 		gap: 19px;
 		align-items: center;
@@ -125,6 +150,14 @@
 	}
 	.header-contact:hover {
 		border-color: white;
+	}
+	.header-contact :global(svg),
+	.mobile-nav a :global(svg) {
+		transition: transform 0.3s;
+	}
+	.header-contact:is(:hover, :focus-visible) :global(svg),
+	.mobile-nav a:is(:hover, :focus-visible) :global(svg) {
+		transform: translate(3px, -3px);
 	}
 	.menu-button {
 		display: none;
@@ -136,6 +169,27 @@
 	}
 	.mobile-nav {
 		display: none;
+		animation: menu-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	@keyframes header-enter {
+		from {
+			opacity: 0;
+			transform: translateY(-12px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+	@keyframes menu-enter {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
 	}
 	@media (max-width: 700px) {
 		.header-inner {

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	// Imported per icon rather than from the package root, which barrels in every Simple Icon.
 	import SiAndroid from '@icons-pack/svelte-simple-icons/icons/SiAndroid';
 	import SiAngular from '@icons-pack/svelte-simple-icons/icons/SiAngular';
@@ -62,20 +63,21 @@
 	<div class="page-shell tools-stage">
 		<span class="tools-orbit" aria-hidden="true"></span>
 		<div class="tools-intro">
-			<p class="eyebrow tools-eyebrow">
+			<p class="eyebrow tools-eyebrow" {@attach reveal({ distance: 16 })}>
 				<span aria-hidden="true">[</span> Technologies &amp; tools <span aria-hidden="true">]</span>
 			</p>
-			<h2 id="tools-heading" class="section-heading">
+			<h2 id="tools-heading" class="section-heading" {@attach reveal({ delay: 80 })}>
 				The tools behind.<br /><span>The thoughtful work.</span>
 			</h2>
-			<p class="tools-note">
+			<p class="tools-note" {@attach reveal({ delay: 160 })}>
 				Not everything I have ever touched. Just the ones I keep coming back to.
 			</p>
 		</div>
 		<ul class="tools-field">
-			{#each tools as tool (tool.name)}
+			{#each tools as tool, index (tool.name)}
 				<li
 					class="tool"
+					{@attach reveal({ delay: (index % 5) * 65, distance: 16, scale: 0.85 })}
 					style:--brand={tool.color}
 					style:--x="{tool.x}%"
 					style:--y="{tool.y}%"

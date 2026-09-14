@@ -149,6 +149,12 @@
 	.text-link:hover {
 		color: white;
 	}
+	.text-link > svg {
+		transition: transform 0.3s;
+	}
+	.text-link:is(:hover, :focus-visible) > svg {
+		transform: translate(3px, -3px);
+	}
 }
 
 @media (max-width: 900px) {
@@ -171,8 +177,10 @@
 	*,
 	*::before,
 	*::after {
+		animation-delay: 0ms !important;
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
+		transition-delay: 0ms !important;
 		transition-duration: 0.01ms !important;
 	}
 }

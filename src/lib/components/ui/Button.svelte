@@ -61,6 +61,9 @@
 
 <style>
 	.button {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -76,14 +79,30 @@
 			transform 0.25s,
 			box-shadow 0.25s;
 	}
-	.button:hover {
+	.button:is(:hover, :focus-visible) {
 		transform: translateY(-2px);
+	}
+	.button:active {
+		transform: translateY(0) scale(0.97);
+	}
+	.button::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		background: linear-gradient(110deg, transparent 20%, #ffffff30 50%, transparent 80%);
+		transform: translateX(-130%);
+		transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	.button:is(:hover, :focus-visible)::after {
+		transform: translateX(130%);
 	}
 	.button :global(svg) {
 		flex-shrink: 0;
 		transition: transform 0.25s;
 	}
-	.button:hover :global(svg) {
+	.button:is(:hover, :focus-visible) :global(svg) {
 		transform: translate(2px, -2px);
 	}
 	.solid {

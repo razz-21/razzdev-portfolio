@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	import { ArrowDown, ArrowUpRight } from '@lucide/svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import LiquidGlassBackground from '$lib/components/visuals/LiquidGlassBackground.svelte';
@@ -10,26 +11,30 @@
 	<LiquidGlassBackground />
 	<div class="page-shell hero-inner">
 		<div class="hero-copy">
-			<div class="eyebrow intro">
+			<div class="eyebrow intro" {@attach reveal({ delay: 80, distance: 16 })}>
 				<span class="little-star">✳</span> SOFTWARE DEVELOPER & CREATIVE BUILDER
 			</div>
-			<h1 id="hero-heading">Thoughtful code.<br /><em>Meaningful experiences.</em></h1>
-			<p>
+			<h1 id="hero-heading" {@attach reveal({ delay: 160, distance: 36 })}>
+				Thoughtful code.<br /><em>Meaningful experiences.</em>
+			</h1>
+			<p {@attach reveal({ delay: 260 })}>
 				I’m Razz, a software developer turning complex ideas into intuitive digital experiences.
 				Based in the Philippines, building for people everywhere.
 			</p>
-			<div class="button-row hero-buttons">
+			<div class="button-row hero-buttons" {@attach reveal({ delay: 360, distance: 20 })}>
 				<Button href="#work" variant="solid">Explore my work</Button>
 				<Button href={cvUrl} download="Ernesto_Razo_CV.pdf">Get my CV</Button>
 			</div>
-			<div class="hero-note">A little curiosity. A lot of care.</div>
+			<div class="hero-note" {@attach reveal({ delay: 440, distance: 12 })}>
+				A little curiosity. A lot of care.
+			</div>
 		</div>
 		<div class="hero-bottom">
-			<a href="#work" class="scroll-cue">
+			<a href="#work" class="scroll-cue" {@attach reveal({ delay: 520, distance: 12 })}>
 				<span class="scroll-circle"><ArrowDown size={15} strokeWidth={1.3} /></span>
 				<span>SCROLL TO EXPLORE</span>
 			</a>
-			<div class="social-links">
+			<div class="social-links" {@attach reveal({ delay: 520, distance: 12 })}>
 				<a href={profile.github} target="_blank" rel="external noopener noreferrer">
 					GitHub <ArrowUpRight size={13} />
 				</a>
@@ -80,6 +85,7 @@
 		margin-bottom: 30px;
 	}
 	.little-star {
+		display: inline-block;
 		font-size: 18px;
 		color: #e8d8fa;
 		line-height: 1;
@@ -154,6 +160,49 @@
 	}
 	.social-links a:hover {
 		color: white;
+	}
+	.social-links a {
+		transition: color 0.25s;
+	}
+	.social-links a :global(svg) {
+		transition: transform 0.3s;
+	}
+	.social-links a:is(:hover, :focus-visible) :global(svg) {
+		transform: translate(2px, -2px);
+	}
+	.scroll-circle {
+		transition:
+			background 0.3s,
+			border-color 0.3s;
+	}
+	.scroll-cue:is(:hover, :focus-visible) .scroll-circle {
+		background: #d8c2ef14;
+		border-color: #d8c2ef70;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.little-star {
+			animation: star-turn 3.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+		}
+		.scroll-circle :global(svg) {
+			animation: scroll-nudge 1.5s ease-in-out 1.2s 3;
+		}
+	}
+	@keyframes star-turn {
+		from {
+			transform: rotate(-120deg);
+		}
+		to {
+			transform: rotate(0);
+		}
+	}
+	@keyframes scroll-nudge {
+		0%,
+		100% {
+			transform: translateY(-2px);
+		}
+		50% {
+			transform: translateY(3px);
+		}
 	}
 	@media (max-width: 700px) {
 		.hero-inner {

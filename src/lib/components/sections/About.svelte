@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	import { ArrowDown, ArrowUpRight, MapPin, Plus } from '@lucide/svelte';
 	import { experience, profile } from '$lib/data/portfolio';
 	import DotWaveBackground from '$lib/components/visuals/DotWaveBackground.svelte';
@@ -12,7 +13,7 @@
 	<div class="page-shell">
 		<div class="about-grid">
 			<DotWaveBackground />
-			<div class="portrait-card">
+			<div class="portrait-card" {@attach reveal({ distance: 30, scale: 0.96 })}>
 				<div class="portrait-fallback" aria-hidden="true">er.</div>
 				{#if !photoFailed}
 					<img
@@ -38,17 +39,19 @@
 			</div>
 
 			<div class="about-copy">
-				<h2 id="about-heading" class="section-heading">
+				<h2 id="about-heading" class="section-heading" {@attach reveal({ delay: 100 })}>
 					An engineer’s mind.<br /><span>A maker’s curiosity.</span>
 				</h2>
-				<p class="intro-copy">Hello, I’m Ernesto. <span>You can call me Razz.</span></p>
-				<p>{profile.bio}</p>
-				<p>
+				<p class="intro-copy" {@attach reveal({ delay: 140 })}>
+					Hello, I’m Ernesto. <span>You can call me Razz.</span>
+				</p>
+				<p {@attach reveal({ delay: 180 })}>{profile.bio}</p>
+				<p {@attach reveal({ delay: 220 })}>
 					I also teach and mentor the next generation of developers at Liceo de Cagayan University.
 					Away from the screen, you’ll find me hiking, traveling, or finding a new rhythm on the
 					dance floor.
 				</p>
-				<div class="personal-stats">
+				<div class="personal-stats" {@attach reveal({ delay: 100 })}>
 					<div><strong>{profile.yearsExperience}</strong><span>Years of building</span></div>
 					<div>
 						<strong>Code <em>&</em> craft</strong><span>Equal parts logic & curiosity</span>
@@ -56,6 +59,7 @@
 				</div>
 				<a
 					class="text-link"
+					{@attach reveal({ delay: 160, distance: 16 })}
 					href={profile.linkedin}
 					target="_blank"
 					rel="external noopener noreferrer"
@@ -66,14 +70,17 @@
 		</div>
 
 		<div class="experience-grid" role="region" aria-label="Professional experience">
-			<div class="experience-intro">
+			<div class="experience-intro" {@attach reveal()}>
 				<p class="eyebrow">The journey so far</p>
 				<h3>Different teams.<br /><span>A shared care for the craft.</span></h3>
 			</div>
 			<div>
 				<div id="experience-list" class="experience-list">
-					{#each visibleExperience as job (job.company)}
-						<details class="experience-row">
+					{#each visibleExperience as job, index (job.company)}
+						<details
+							class="experience-row"
+							{@attach reveal({ delay: (index % 3) * 80, distance: 20 })}
+						>
 							<summary>
 								<div class="job-name">
 									<span class="company">{job.company}</span><span class="role">{job.role}</span>
@@ -90,6 +97,7 @@
 				<button
 					type="button"
 					class="text-link experience-toggle"
+					{@attach reveal({ distance: 16 })}
 					aria-expanded={showAllExperience}
 					aria-controls="experience-list"
 					onclick={() => (showAllExperience = !showAllExperience)}
@@ -141,6 +149,15 @@
 		object-fit: cover;
 		object-position: center 62%;
 		filter: grayscale(1);
+		transition:
+			transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+			filter 0.9s;
+	}
+	@media (hover: hover) {
+		.portrait-card:hover img {
+			transform: scale(1.04);
+			filter: grayscale(0.35);
+		}
 	}
 	.portrait-shade {
 		position: absolute;
@@ -281,6 +298,23 @@
 	}
 	.experience-row {
 		border-bottom: 1px solid #ffffff24;
+		transition: background-color 0.3s;
+	}
+	.experience-row:is(:hover, :focus-within) {
+		background-color: #c4a1ff06;
+	}
+	.experience-row[open] .job-description {
+		animation: experience-open 0.35s ease-out;
+	}
+	@keyframes experience-open {
+		from {
+			opacity: 0;
+			transform: translateY(-8px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
 	}
 	.experience-row summary {
 		display: grid;

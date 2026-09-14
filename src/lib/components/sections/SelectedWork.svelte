@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { reveal } from '$lib/attachments/reveal';
 	import { ArrowUpRight } from '@lucide/svelte';
 	import { profile, projects } from '$lib/data/portfolio';
 	import ProjectPreview from '$lib/components/visuals/ProjectPreview.svelte';
@@ -15,10 +16,12 @@
 
 <section id="work" class="work-section page-shell" aria-labelledby="work-heading">
 	<div class="work-heading-row">
-		<h2 id="work-heading" class="section-heading">Built with purpose.</h2>
-		<p>A few things I’ve brought to life.<br />Each one a different challenge. The same care.</p>
+		<h2 id="work-heading" class="section-heading" {@attach reveal()}>Built with purpose.</h2>
+		<p {@attach reveal({ delay: 100 })}>
+			A few things I’ve brought to life.<br />Each one a different challenge. The same care.
+		</p>
 	</div>
-	<div class="work-toolbar">
+	<div class="work-toolbar" {@attach reveal({ distance: 16 })}>
 		<div class="work-filters" role="group" aria-label="Filter projects">
 			{#each filters as item (item)}<button
 					type="button"
@@ -34,7 +37,10 @@
 	</div>
 	<div class="project-grid">
 		{#each filtered as project, index (project.id)}
-			<article class:wide={project.kind === 'attendance' && filter === 'All work'}>
+			<article
+				class:wide={project.kind === 'attendance' && filter === 'All work'}
+				{@attach reveal({ delay: index * 100, distance: 36 })}
+			>
 				<a
 					class="project-visual-link"
 					href={project.href}
@@ -63,7 +69,7 @@
 			</article>
 		{/each}
 	</div>
-	<div class="work-bottom">
+	<div class="work-bottom" {@attach reveal({ distance: 16 })}>
 		<a class="text-link" href={profile.github} target="_blank" rel="external noopener noreferrer"
 			>More on GitHub<ArrowUpRight size={16} /></a
 		>
@@ -101,6 +107,10 @@
 		gap: 5px;
 	}
 	.filter {
+		transition:
+			color 0.25s,
+			background-color 0.25s,
+			transform 0.25s;
 		border: 0;
 		padding: 10px 17px;
 		color: #808079;
@@ -116,6 +126,10 @@
 	}
 	.filter:hover {
 		color: white;
+		background-color: #ffffff08;
+	}
+	.filter:active {
+		transform: scale(0.96);
 	}
 	.filter span {
 		font-size: 8px;
@@ -145,10 +159,14 @@
 	.project-visual-link {
 		position: relative;
 		display: block;
-		transition: transform 0.35s;
+		border-radius: 14px;
+		transition:
+			transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+			box-shadow 0.45s;
 	}
-	.project-visual-link:hover {
+	.project-visual-link:is(:hover, :focus-visible) {
 		transform: translateY(-4px);
+		box-shadow: 0 18px 45px #0005;
 	}
 	.project-open {
 		position: absolute;
@@ -196,9 +214,13 @@
 	}
 	h3 a :global(svg) {
 		color: #7b7b74;
+		transition:
+			color 0.25s,
+			transform 0.3s;
 	}
-	h3 a:hover :global(svg) {
+	h3 a:is(:hover, :focus-visible) :global(svg) {
 		color: white;
+		transform: translate(3px, -3px);
 	}
 	.project-info p {
 		color: #8d8d86;
